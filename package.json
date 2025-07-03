@@ -1,0 +1,51 @@
+{
+  "name": "food",
+  "version": "1.0.0",
+  "description": "Recipe Ideas - AI-Generated Recipe Website for Food Enthusiasts",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "cd client && npm run build",
+    "build:server": "cd server && npm run build",
+    "start": "cd server && npm start",
+    "install-all": "npm install && cd client && npm install && cd ../server && npm install",
+    "setup": "chmod +x scripts/setup.sh && ./scripts/setup.sh",
+    "seed": "cd server && npm run seed",
+    "test": "npm run test:client && npm run test:server",
+    "test:client": "cd client && npm test",
+    "test:server": "cd server && npm test",
+    "lint": "npm run lint:client && npm run lint:server",
+    "lint:client": "cd client && npm run lint",
+    "lint:server": "cd server && npm run lint",
+    "format": "npm run format:client && npm run format:server",
+    "format:client": "cd client && npm run format",
+    "format:server": "cd server && npm run format"
+  },
+  "keywords": [
+    "recipes",
+    "food",
+    "cooking",
+    "AI",
+    "react",
+    "nodejs",
+    "aws",
+    "dynamodb",
+    "amplify"
+  ],
+  "author": "Recipe Ideas Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TimSavigar/food.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TimSavigar/food/issues"
+  },
+  "homepage": "https://recipe-ideas.food"
+} 
