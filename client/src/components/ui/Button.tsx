@@ -22,7 +22,7 @@ const sizeClasses: Record<NonNullable<ButtonProps['size']>, string> = {
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = 'primary', size = 'md', isLoading = false, children, ...props }, ref) => {
+  ({ className, variant = 'primary', size = 'md', isLoading = false, children, ...props }: ButtonProps, ref) => {
     return (
       <button
         ref={ref}
