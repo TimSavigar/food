@@ -6,6 +6,9 @@ import { HelmetProvider } from 'react-helmet-async'
 import { Toaster } from 'react-hot-toast'
 import App from './App.tsx'
 import './index.css'
+import { Suspense } from 'react'
+import { ErrorBoundary } from './components/layout/ErrorBoundary'
+import { Spinner } from './components/ui/Spinner'
 
 // Create a client
 const queryClient = new QueryClient({
@@ -23,7 +26,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <App />
+          <ErrorBoundary>
+            <Suspense fallback={<div className="flex justify-center items-center min-h-screen"><Spinner size={48} /></div>}>
+              <App />
+            </Suspense>
+          </ErrorBoundary>
           <Toaster
             position="top-right"
             toastOptions={{

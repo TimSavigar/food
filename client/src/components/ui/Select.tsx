@@ -20,7 +20,7 @@ export function Select<T extends unknown>({ value, onChange, options, placeholde
   const selected = options.find(o => o.value === value)
   return (
     <Listbox value={value} onChange={onChange}>
-      {({ open }) => (
+      {({ open }: { open: boolean }) => (
         <div className={cn('relative', className)}>
           <Listbox.Button className="relative w-full cursor-pointer rounded-md bg-white py-2 pl-3 pr-10 text-left shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 sm:text-sm">
             <span className="block truncate">{selected ? selected.label : placeholder}</span>
