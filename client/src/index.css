@@ -1,118 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-  font-family: 'Poppins', 'Montserrat', Arial, sans-serif;
-  background: #f8f9fa;
-  color: #222;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Montserrat', 'Poppins', Arial, sans-serif;
-  font-weight: 700;
-  color: #181818;
-}
-
-a {
-  color: #e67e22;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-a:hover {
-  color: #ff9800;
-}
-
-.container {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
-
+/* Custom base styles */
 @layer base {
   html {
     scroll-behavior: smooth;
   }
   
   body {
-    @apply font-sans text-gray-900 bg-white;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
+
+  * {
+    box-sizing: border-box;
   }
 }
 
+/* Custom component styles */
 @layer components {
-  .btn {
-    @apply inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
-  }
-  
   .btn-primary {
-    @apply btn bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+    @apply bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors duration-200 shadow-lg hover:shadow-xl;
   }
-  
+
   .btn-secondary {
-    @apply btn bg-secondary-600 text-white hover:bg-secondary-700 focus:ring-secondary-500;
+    @apply border-2 border-orange-600 text-orange-600 px-6 py-3 rounded-lg font-semibold hover:bg-orange-600 hover:text-white transition-colors duration-200;
   }
-  
-  .btn-outline {
-    @apply btn border-gray-300 text-gray-700 bg-white hover:bg-gray-50 focus:ring-primary-500;
-  }
-  
+
   .card {
-    @apply bg-white rounded-lg shadow-md overflow-hidden transition-shadow duration-200 hover:shadow-lg;
+    @apply bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-200;
   }
-  
-  .input {
-    @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500;
+
+  .gradient-bg {
+    @apply bg-gradient-to-br from-orange-50 via-white to-orange-100;
   }
-  
-  .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
-  }
-  
-  .badge-primary {
-    @apply badge bg-primary-100 text-primary-800;
-  }
-  
-  .badge-secondary {
-    @apply badge bg-secondary-100 text-secondary-800;
-  }
-  
-  .badge-accent {
-    @apply badge bg-accent-100 text-accent-800;
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-orange-600 to-orange-800 bg-clip-text text-transparent;
   }
 }
 
+/* Custom utility styles */
 @layer utilities {
-  .text-gradient {
-    @apply bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent;
+  .wavy-text {
+    display: inline-block;
+    animation: wave 3s ease-in-out infinite;
+    background: linear-gradient(45deg, #ffffff, #fbbf24, #ffffff);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
-  
-  .bg-gradient-primary {
-    @apply bg-gradient-to-r from-primary-500 to-primary-600;
+
+  @keyframes wave {
+    0%, 100% { 
+      transform: skewX(-3deg) scale(1);
+      background-position: 0% 50%;
+    }
+    25% { 
+      transform: skewX(3deg) scale(1.02);
+      background-position: 100% 50%;
+    }
+    50% { 
+      transform: skewX(-2deg) scale(1);
+      background-position: 100% 50%;
+    }
+    75% { 
+      transform: skewX(2deg) scale(1.02);
+      background-position: 0% 50%;
+    }
   }
-  
-  .bg-gradient-secondary {
-    @apply bg-gradient-to-r from-secondary-500 to-secondary-600;
-  }
-  
-  .animate-fade-in {
+
+  .fade-in {
     animation: fadeIn 0.5s ease-in-out;
   }
-  
-  .animate-slide-up {
-    animation: slideUp 0.3s ease-out;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
-  
-  .animate-scale-in {
-    animation: scaleIn 0.2s ease-out;
+
+  .slide-up {
+    animation: slideUp 0.6s ease-out;
   }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .bounce-in {
+    animation: bounceIn 0.8s ease-out;
+  }
+
+  @keyframes bounceIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    70% {
+      transform: scale(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+/* Responsive design utilities */
+@media (max-width: 768px) {
+  .container {
+    @apply px-4;
+  }
+}
+
+/* Focus styles for accessibility */
+*:focus {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
 }
 
 /* Custom scrollbar */
@@ -121,132 +148,107 @@ a:hover {
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100;
+  background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 rounded-full;
+  background: #f59e0b;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400;
+  background: #d97706;
 }
 
 /* Loading spinner */
 .spinner {
-  @apply animate-spin rounded-full border-2 border-gray-300 border-t-primary-600;
+  border: 3px solid #f3f4f6;
+  border-top: 3px solid #f59e0b;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* Recipe card hover effects */
 .recipe-card {
-  @apply card cursor-pointer transform transition-all duration-200 hover:scale-105;
+  transition: all 0.3s ease;
 }
 
-.recipe-card:hover .recipe-image {
-  @apply scale-110;
+.recipe-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-.recipe-image {
-  @apply transition-transform duration-300;
+/* Gradient text for headings */
+.gradient-text {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Filter chips */
-.filter-chip {
-  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 cursor-pointer;
+/* Custom button styles */
+.btn {
+  @apply inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
 }
 
-.filter-chip.active {
-  @apply bg-primary-100 text-primary-800 border border-primary-200;
+.btn-primary {
+  @apply text-white bg-orange-600 hover:bg-orange-700 focus:ring-orange-500;
 }
 
-.filter-chip:not(.active) {
-  @apply bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200;
+.btn-secondary {
+  @apply text-orange-600 bg-white border-orange-600 hover:bg-orange-600 hover:text-white focus:ring-orange-500;
 }
 
-/* Rating stars */
-.star-rating {
-  @apply flex items-center space-x-1;
+.btn-outline {
+  @apply text-orange-600 border-orange-600 hover:bg-orange-600 hover:text-white focus:ring-orange-500;
 }
 
-.star {
-  @apply text-accent-400 transition-colors duration-200;
+/* Form styles */
+.form-input {
+  @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500;
 }
 
-.star.filled {
-  @apply text-accent-500;
+.form-label {
+  @apply block text-sm font-medium text-gray-700 mb-1;
 }
 
-/* Nutrition info */
-.nutrition-item {
-  @apply flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0;
+.form-error {
+  @apply text-red-600 text-sm mt-1;
 }
 
-.nutrition-label {
-  @apply text-sm text-gray-600;
+/* Badge styles */
+.badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
 }
 
-.nutrition-value {
-  @apply text-sm font-medium text-gray-900;
+.badge-orange {
+  @apply bg-orange-100 text-orange-800;
 }
 
-/* Responsive grid */
-.recipes-grid {
-  @apply grid gap-6;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+.badge-green {
+  @apply bg-green-100 text-green-800;
 }
 
-@media (min-width: 640px) {
-  .recipes-grid {
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  }
+.badge-blue {
+  @apply bg-blue-100 text-blue-800;
 }
 
-@media (min-width: 1024px) {
-  .recipes-grid {
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  }
+/* Card styles */
+.card-header {
+  @apply px-6 py-4 border-b border-gray-200;
 }
 
-/* Hero section */
-.hero-gradient {
-  background: linear-gradient(135deg, #fef7ee 0%, #f0fdf4 50%, #fefce8 100%);
+.card-body {
+  @apply px-6 py-4;
 }
 
-/* Search bar */
-.search-bar {
-  @apply relative max-w-2xl mx-auto;
-}
-
-.search-input {
-  @apply w-full pl-12 pr-4 py-3 text-lg border-2 border-gray-200 rounded-full focus:border-primary-500 focus:outline-none transition-colors duration-200;
-}
-
-.search-icon {
-  @apply absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400;
-}
-
-/* Footer */
-.footer-link {
-  @apply text-gray-600 hover:text-primary-600 transition-colors duration-200;
-}
-
-/* Social share buttons */
-.share-button {
-  @apply inline-flex items-center justify-center w-10 h-10 rounded-full text-white transition-transform duration-200 hover:scale-110;
-}
-
-.share-facebook {
-  @apply share-button bg-blue-600 hover:bg-blue-700;
-}
-
-.share-twitter {
-  @apply share-button bg-blue-400 hover:bg-blue-500;
-}
-
-.share-pinterest {
-  @apply share-button bg-red-600 hover:bg-red-700;
-}
-
-.share-email {
-  @apply share-button bg-gray-600 hover:bg-gray-700;
+.card-footer {
+  @apply px-6 py-4 border-t border-gray-200;
 } 

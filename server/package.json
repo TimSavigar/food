@@ -1,58 +1,36 @@
 {
-  "name": "food-server",
+  "name": "recipe-app-server",
   "version": "1.0.0",
-  "description": "Recipe Ideas Backend API - Node.js with Express and DynamoDB",
+  "description": "Backend server for recipe application",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "build": "echo 'No build step required for Node.js'",
-    "test": "jest",
-    "lint": "eslint .",
-    "format": "prettier --write \"**/*.{js,json,md}\"",
-    "seed": "node scripts/seed-data.js"
+    "test": "jest"
   },
-  "keywords": [
-    "nodejs",
-    "express",
-    "dynamodb",
-    "aws",
-    "api",
-    "recipes",
-    "food"
-  ],
-  "author": "Recipe Ideas Team",
-  "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "helmet": "^7.0.0",
-    "morgan": "^1.10.0",
-    "dotenv": "^16.3.1",
-    "aws-sdk": "^2.1450.0",
-    "jsonwebtoken": "^9.0.2",
     "bcryptjs": "^2.4.3",
-    "express-rate-limit": "^6.10.0",
-    "express-validator": "^7.0.1",
     "compression": "^1.7.4",
-    "sitemap": "^7.1.1",
-    "multer": "^1.4.5-lts.1",
-    "sharp": "^0.32.5",
-    "uuid": "^9.0.0"
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.5.0",
+    "morgan": "^1.10.0",
+    "openai": "^4.104.0"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1",
     "jest": "^29.6.2",
-    "supertest": "^6.3.3",
-    "eslint": "^8.47.0",
-    "prettier": "^3.0.1"
+    "nodemon": "^3.0.1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/TimSavigar/food.git"
-  },
-  "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=8.0.0"
-  }
-} 
+  "keywords": [
+    "recipe",
+    "api",
+    "express",
+    "mongodb"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
