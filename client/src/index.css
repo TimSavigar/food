@@ -2,6 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  font-family: 'Poppins', 'Montserrat', Arial, sans-serif;
+  background: #f8f9fa;
+  color: #222;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', 'Poppins', Arial, sans-serif;
+  font-weight: 700;
+  color: #181818;
+}
+
+a {
+  color: #e67e22;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+a:hover {
+  color: #ff9800;
+}
+
+.container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
 @layer base {
