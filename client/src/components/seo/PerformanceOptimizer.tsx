@@ -244,6 +244,13 @@ export const CriticalCSS: React.FC<{ css: string }> = ({ css }) => {
   return null
 }
 
+// Extend Window interface for gtag
+declare global {
+  interface Window {
+    gtag?: (command: string, eventName: string, parameters: any) => void
+  }
+}
+
 // Performance monitoring
 export const PerformanceMonitor: React.FC = () => {
   useEffect(() => {
@@ -269,11 +276,12 @@ export const PerformanceMonitor: React.FC = () => {
       const fidObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries()
         entries.forEach(entry => {
-          console.log('FID:', entry.processingStart - entry.startTime)
+          const fidEntry = entry as PerformanceEntry & { processingStart: number }
+          console.log('FID:', fidEntry.processingStart - fidEntry.startTime)
           
           if (window.gtag) {
             window.gtag('event', 'FID', {
-              value: Math.round(entry.processingStart - entry.startTime),
+              value: Math.round(fidEntry.processingStart - fidEntry.startTime),
               event_category: 'Web Vitals'
             })
           }
@@ -286,8 +294,9 @@ export const PerformanceMonitor: React.FC = () => {
       const clsObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries()
         entries.forEach(entry => {
-          if (!entry.hadRecentInput) {
-            clsValue += (entry as any).value
+          const clsEntry = entry as PerformanceEntry & { hadRecentInput: boolean; value: number }
+          if (!clsEntry.hadRecentInput) {
+            clsValue += clsEntry.value
             console.log('CLS:', clsValue)
             
             if (window.gtag) {

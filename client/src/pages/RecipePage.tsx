@@ -1,12 +1,58 @@
 import { Helmet } from 'react-helmet-async'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Clock, Users, Star, Heart, Share2, Print, Bookmark, ChevronRight } from 'lucide-react'
+import { Clock, Users, Star, Heart, Share2, Printer, ChevronRight } from 'lucide-react'
 import { motion } from 'framer-motion'
+
+interface Ingredient {
+  name: string
+  amount: string
+  unit: string
+  category: string
+}
+
+interface Nutrition {
+  calories: number
+  protein: number
+  carbs: number
+  fat: number
+  fiber: number
+}
+
+interface RelatedRecipe {
+  name: string
+  slug: string
+  image: string
+}
+
+interface Recipe {
+  id: string
+  slug: string
+  name: string
+  description: string
+  imageUrl: string
+  prepTime: number
+  cookTime: number
+  totalTime: number
+  servings: number
+  difficulty: string
+  cuisine: string
+  rating: number
+  reviewCount: number
+  ingredients: Ingredient[]
+  instructions: string[]
+  nutrition: Nutrition
+  tags: string[]
+  dietary: string[]
+  allergens: string[]
+  tips: string[]
+  variations: string[]
+  relatedRecipes: RelatedRecipe[]
+}
 
 const RecipePage = () => {
   const { slug } = useParams()
-  const [recipe, setRecipe] = useState(null)
+  const [recipe, setRecipe] = useState<Recipe | null>(null)
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('ingredients')
 
@@ -16,7 +62,7 @@ const RecipePage = () => {
     setTimeout(() => {
       setRecipe({
         id: '1',
-        slug: slug,
+        slug: slug || 'default-slug',
         name: 'Easy Chocolate Chip Cookies Recipe',
         description: 'This classic Chocolate Chip Cookies recipe yields chewy, gooey cookies in just 30 minutes – a family favorite with simple ingredients.',
         imageUrl: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=800',
@@ -255,8 +301,8 @@ const RecipePage = () => {
               <span>Share</span>
             </button>
             <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-              <Print className="w-4 h-4" />
-              <span>Print</span>
+                              <Printer className="w-4 h-4" />
+                <span>Print</span>
             </button>
           </div>
         </motion.div>
