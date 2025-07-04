@@ -19,11 +19,9 @@
       "react",
       "react-dom",
       "vite/client",
-      "@headlessui__react",
       "react-router-dom",
       "react-hot-toast",
-      "react-helmet-async",
-      "react-query"
+      "react-helmet-async"
     ],
     "baseUrl": ".",
     "paths": {
