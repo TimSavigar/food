@@ -21,7 +21,7 @@ const sizeClasses: Record<NonNullable<ButtonProps['size']>, string> = {
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = 'primary', size = 'md', isLoading = false, disabled, children, ...props }: ButtonProps, ref) => {
+  ({ className, variant = 'primary', size = 'md', isLoading = false, children, ...props }: ButtonProps, ref) => {
     return (
       <button
         ref={ref}
@@ -33,7 +33,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           sizeClasses[size as keyof typeof sizeClasses],
           className
         )}
-        disabled={disabled || isLoading}
+        disabled={props.disabled || isLoading}
         {...props}
       >
         {isLoading && (
