@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
+import { Modal } from '../ui/Modal';
 
 const Header: React.FC = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const navLinks = [
+    { name: 'Recipes', path: '/recipes' },
+    { name: 'About', path: '/about' },
+    { name: 'Contact', path: '/contact' },
+    { name: 'Admin', path: '/admin' },
+  ];
+
   return (
     <header className="bg-black sticky top-0 z-50 shadow-lg">
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
@@ -15,22 +26,43 @@ const Header: React.FC = () => {
         </Link>
         
         {/* Navigation */}
-        <nav className="hidden md:flex space-x-8">
-          <Link to="/recipes" className="text-white text-lg font-medium hover:text-orange-400 transition-colors duration-200">Recipes</Link>
-          <Link to="/about" className="text-white text-lg font-medium hover:text-orange-400 transition-colors duration-200">About</Link>
-          <Link to="/contact" className="text-white text-lg font-medium hover:text-orange-400 transition-colors duration-200">Contact</Link>
-          <Link to="/admin" className="text-white text-lg font-medium hover:text-orange-400 transition-colors duration-200">Admin</Link>
+        <nav className="hidden md:flex space-x-8" aria-label="Main navigation">
+          {navLinks.map(link => (
+            <Link key={link.name} to={link.path} className="text-white text-lg font-medium hover:text-orange-400 transition-colors duration-200">
+              {link.name}
+            </Link>
+          ))}
         </nav>
 
         {/* Mobile menu button */}
         <div className="md:hidden">
-          <button className="text-white hover:text-orange-400 transition-colors">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+          <button aria-label="Open menu" onClick={() => setMobileOpen(true)} className="text-white hover:text-orange-400 transition-colors">
+            <Menu className="w-6 h-6" />
           </button>
         </div>
       </div>
+
+      {/* Mobile drawer */}
+      <Modal isOpen={mobileOpen} onClose={() => setMobileOpen(false)} className="p-0 bg-transparent shadow-none" aria-label="Mobile menu">
+        <div className="bg-black rounded-lg p-6 space-y-4">
+          <div className="flex justify-between items-center mb-4">
+            <span className="text-white text-xl font-bold">Menu</span>
+            <button aria-label="Close menu" onClick={() => setMobileOpen(false)} className="text-white hover:text-orange-400">
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+          {navLinks.map(link => (
+            <Link
+              key={link.name}
+              to={link.path}
+              onClick={() => setMobileOpen(false)}
+              className="block text-white text-lg font-medium hover:text-orange-400"
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
+      </Modal>
       
       {/* Enhanced wavy text effect */}
       <style>{`
