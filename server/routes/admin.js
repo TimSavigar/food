@@ -153,18 +153,39 @@ router.post('/recipes/ai-generate', async (req, res) => {
         }
 
         // Create recipe object
+        let imageUrl = recipeData.imageUrl || '';
+
+        // If no imageUrl provided, generate one with DALL·E
+        if (!imageUrl) {
+          try {
+            const imagePrompt = `Professional food photograph, ${recipeData.title}, plated beautifully, overhead shot, bright natural lighting, high resolution`;
+            const imgResponse = await openai.images.generate({
+              model: 'dall-e-3',
+              prompt: imagePrompt,
+              n: 1,
+              size: '1024x1024',
+              quality: 'standard',
+            });
+            if (imgResponse && imgResponse.data && imgResponse.data.length) {
+              imageUrl = imgResponse.data[0].url;
+            }
+          } catch (imgErr) {
+            console.error('Error generating image for recipe:', recipeData.title, imgErr);
+          }
+        }
+
         const recipe = new Recipe({
-          title: recipeData.title,
+          name: recipeData.title, // using name field in schema
           description: recipeData.description || '',
           cuisine: recipeData.cuisine || 'International',
           prepTime: recipeData.prepTime || 0,
           cookTime: recipeData.cookTime || 0,
           servings: recipeData.servings || 1,
-          difficulty: recipeData.difficulty || 'Medium',
+          difficulty: (recipeData.difficulty || 'Medium').toLowerCase(),
           ingredients: recipeData.ingredients || [],
           instructions: recipeData.instructions || [],
           tags: recipeData.tags || [],
-          imageUrl: recipeData.imageUrl || ''
+          imageUrl,
         });
 
         await recipe.save();

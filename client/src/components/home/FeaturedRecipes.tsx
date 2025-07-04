@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion'
-import { Clock, Star, Users } from 'lucide-react'
+import Clock from 'lucide-react/dist/esm/icons/clock'
+import Star from 'lucide-react/dist/esm/icons/star'
+import Users from 'lucide-react/dist/esm/icons/users'
 import { Link } from 'react-router-dom'
+import AIImage from '../AIImage'
 
 const FeaturedRecipes = () => {
   const featuredRecipes = [
@@ -59,11 +62,19 @@ const FeaturedRecipes = () => {
             >
               <Link to={`/recipe/${recipe.id}`}>
                 <div className="relative">
-                  <img
-                    src={recipe.image}
-                    alt={recipe.name}
-                    className="w-full h-48 object-cover"
-                  />
+                  {recipe.image ? (
+                    <img
+                      src={recipe.image}
+                      alt={recipe.name}
+                      className="w-full h-48 object-cover"
+                    />
+                  ) : (
+                    <AIImage
+                      prompt={`Close-up professional food photo of ${recipe.name}`}
+                      alt={recipe.name}
+                      className="w-full h-48 object-cover"
+                    />
+                  )}
                   <div className="absolute top-3 right-3 bg-white bg-opacity-90 rounded-full px-2 py-1 text-xs font-medium">
                     {recipe.difficulty}
                   </div>
