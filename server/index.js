@@ -15,6 +15,7 @@ const filterRoutes = require('./routes/filters');
 const authRoutes = require('./routes/auth');
 const seoRoutes = require('./routes/seo');
 const adminRoutes = require('./routes/admin');
+const imageRoutes = require('./routes/images');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -69,6 +70,7 @@ app.use('/api/filters', filterRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/seo', seoRoutes);
 app.use('/api', adminRoutes); // Admin routes
+app.use('/api/images', imageRoutes);
 
 // SEO routes
 app.get('/sitemap.xml', (req, res) => {

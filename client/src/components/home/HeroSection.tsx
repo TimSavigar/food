@@ -1,10 +1,18 @@
 import { motion } from 'framer-motion'
 import { Search, ChefHat } from 'lucide-react'
+import AIImage from '../AIImage'
 
 const HeroSection = () => {
   return (
-    <section className="relative bg-gradient-to-br from-orange-50 to-yellow-50 py-20">
-      <div className="container mx-auto px-4">
+    <section className="relative bg-gradient-to-br from-orange-50 to-yellow-50 py-20 overflow-hidden">
+      {/* AI generated background image */}
+      <AIImage
+        prompt="A vibrant assortment of gourmet dishes elegantly arranged on a rustic wooden table, professional food photography, depth of field, warm lighting"
+        alt="Gourmet food background"
+        className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none select-none"
+        size="1024x1024"
+      />
+      <div className="relative z-10 container mx-auto px-4">
         <div className="text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -14,11 +22,11 @@ const HeroSection = () => {
             <div className="flex justify-center mb-6">
               <ChefHat className="w-16 h-16 text-orange-500" />
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 drop-shadow-md">
               Discover Amazing
               <span className="text-orange-500"> Recipes</span>
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-700 mb-8 max-w-2xl mx-auto drop-shadow">
               Explore thousands of AI-generated recipes, filter by ingredients, dietary preferences, 
               and cooking styles. Perfect for food enthusiasts looking for inspiration.
             </p>
