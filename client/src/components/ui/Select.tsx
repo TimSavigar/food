@@ -39,10 +39,10 @@ export function Select<T extends unknown>({ value, onChange, options, placeholde
               {options.map((option) => (
                 <Listbox.Option
                   key={String(option.value)}
-                  className={({ active }) => cn('relative cursor-pointer select-none py-2 pl-10 pr-4', active ? 'bg-orange-100 text-orange-900' : 'text-gray-900')}
+                  className={({ active }: { active: boolean }) => cn('relative cursor-pointer select-none py-2 pl-10 pr-4', active ? 'bg-orange-100 text-orange-900' : 'text-gray-900')}
                   value={option.value}
                 >
-                  {({ selected }) => (
+                  {({ selected }: { selected: boolean }) => (
                     <>
                       <span className={cn('block truncate', selected && 'font-medium')}>{option.label}</span>
                       {selected ? (
