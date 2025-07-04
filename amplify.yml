@@ -6,6 +6,7 @@ frontend:
         - npm ci
         - cd client && npm ci
         - cd ../server && npm ci
+        - cd ..
     build:
       commands:
         - ls -la
