@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion'
-import { useState } from 'react'
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const CategoryFilters = () => {
   const [activeCategory, setActiveCategory] = useState('all')
@@ -32,8 +32,10 @@ const CategoryFilters = () => {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-          {categories.map((category, index) => (
-            <motion.button
+          {categories.map((category, index) => {
+            const MotionButton = motion.button as React.ComponentType<any>;
+            return (
+            <MotionButton
               key={category.id}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -47,8 +49,8 @@ const CategoryFilters = () => {
             >
               <div className="text-2xl mb-2">{category.icon}</div>
               <div className="text-sm font-medium">{category.name}</div>
-            </motion.button>
-          ))}
+            </MotionButton>
+          )})}
         </div>
 
         <div className="mt-8 text-center">
