@@ -8,6 +8,7 @@ frontend:
         - cd ../server && npm ci
     build:
       commands:
+        - ls -la
         - cd client && npm run build
   artifacts:
     baseDirectory: client/dist
