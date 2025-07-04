@@ -1,10 +1,11 @@
 import * as React from 'react'
-import { cn } from '../../utils/cn'
+import { cn } from '@/utils/cn'
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost'
   size?: 'sm' | 'md' | 'lg'
   isLoading?: boolean
+  children?: React.ReactNode
 }
 
 const variantClasses: Record<NonNullable<ButtonProps['variant']>, string> = {
@@ -21,7 +22,7 @@ const sizeClasses: Record<NonNullable<ButtonProps['size']>, string> = {
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = 'primary', size = 'md', isLoading = false, children, ...props }: ButtonProps, ref) => {
+  ({ className, variant = 'primary', size = 'md', isLoading = false, children, ...props }, ref) => {
     return (
       <button
         ref={ref}

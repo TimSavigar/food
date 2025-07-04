@@ -13,7 +13,13 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["node"],
+    "types": [
+      "node",
+      "react",
+      "react-dom",
+      "vite/client",
+      "@headlessui__react"
+    ],
     "baseUrl": "./src",
     "paths": {
       "@/*": ["./src/*"]
