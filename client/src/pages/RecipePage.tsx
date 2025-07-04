@@ -74,8 +74,8 @@ const RecipePage: React.FC = () => {
   };
 
   const scaleIngredient = (ingredient: string, originalServings: number) => {
-    const scale = servings / originalServings;
     // This is a simple scaling - in a real app you'd want more sophisticated ingredient parsing
+    // const scale = servings / originalServings;
     return ingredient;
   };
 
