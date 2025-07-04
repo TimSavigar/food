@@ -1,9 +1,3 @@
-declare module 'framer-motion' {
-  // Framer Motion ships its own typings, but in case of resolution issues, fall back to any.
-  const Motion: any
-  export = Motion
-}
-
 declare module 'lucide-react' {
   import * as React from 'react'
 
