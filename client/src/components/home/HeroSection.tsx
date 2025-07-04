@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
-import { Search, ChefHat } from 'lucide-react'
+import Search from 'lucide-react/dist/esm/icons/search'
+import ChefHat from 'lucide-react/dist/esm/icons/chef-hat'
 import AIImage from '../AIImage'
 
 const HeroSection = () => {

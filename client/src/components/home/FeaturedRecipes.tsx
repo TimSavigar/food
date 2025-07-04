@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
-import { Clock, Star, Users } from 'lucide-react'
+import Clock from 'lucide-react/dist/esm/icons/clock'
+import Star from 'lucide-react/dist/esm/icons/star'
+import Users from 'lucide-react/dist/esm/icons/users'
 import { Link } from 'react-router-dom'
 import AIImage from '../AIImage'
 
