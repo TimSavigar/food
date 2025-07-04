@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Search, Filter, Clock, Users, Star, Heart } from 'lucide-react';
+import { Search, Filter, Clock, Users, Star, Heart, Globe } from 'lucide-react';
 
 interface Recipe {
   _id: string;
@@ -17,39 +18,75 @@ interface Recipe {
   imageUrl?: string;
 }
 
-const RecipesPage: React.FC = () => {
+const CuisinePage: React.FC = () => {
+  const { cuisine } = useParams<{ cuisine: string }>();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCuisine, setSelectedCuisine] = useState('');
   const [selectedDifficulty, setSelectedDifficulty] = useState('');
   const [selectedDiet, setSelectedDiet] = useState('');
-  const [sortBy, setSortBy] = useState('newest');
+  const [sortBy, setSortBy] = useState('popular');
 
-  const cuisines = ['Italian', 'Mexican', 'Asian', 'Indian', 'French', 'Mediterranean', 'American', 'Thai', 'Japanese', 'Greek'];
   const difficulties = ['Easy', 'Medium', 'Hard'];
   const diets = ['Vegetarian', 'Vegan', 'Gluten-Free', 'Keto', 'Paleo', 'Dairy-Free'];
   const sortOptions = [
-    { value: 'newest', label: 'Newest First' },
     { value: 'popular', label: 'Most Popular' },
     { value: 'rating', label: 'Highest Rated' },
-    { value: 'time', label: 'Quickest' }
+    { value: 'time', label: 'Quickest' },
+    { value: 'newest', label: 'Newest First' }
   ];
 
-  useEffect(() => {
-    fetchRecipes();
-  }, []);
+  // Cuisine-specific content
+  const cuisineInfo = {
+    italian: {
+      name: 'Italian',
+      description: 'Italian cuisine is beloved for its regional diversity – from hearty pastas of the north to bright seafood dishes of the south, and of course classics like pizza and gelato. Explore our collection of authentic Italian recipes, traditional favorites and modern twists, to bring la dolce vita to your kitchen.',
+      heroImage: '🍝',
+      popularDishes: ['Pasta Carbonara', 'Margherita Pizza', 'Tiramisu', 'Risotto', 'Bruschetta']
+    },
+    mexican: {
+      name: 'Mexican',
+      description: 'Discover the vibrant flavors of Mexican cuisine with our collection of authentic recipes. From traditional tacos and enchiladas to modern interpretations, explore the rich culinary heritage of Mexico with easy-to-follow recipes that bring the fiesta to your table.',
+      heroImage: '🌮',
+      popularDishes: ['Tacos al Pastor', 'Guacamole', 'Churros', 'Mole Poblano', 'Chiles Rellenos']
+    },
+    asian: {
+      name: 'Asian',
+      description: 'Explore the diverse and delicious world of Asian cuisine. From the umami-rich dishes of Japan to the bold flavors of Thailand, discover authentic recipes that showcase the incredible variety and depth of Asian cooking traditions.',
+      heroImage: '🍜',
+      popularDishes: ['Pad Thai', 'Sushi Rolls', 'Kung Pao Chicken', 'Pho', 'Bibimbap']
+    },
+    indian: {
+      name: 'Indian',
+      description: 'Experience the aromatic spices and rich flavors of Indian cuisine. From creamy curries to fluffy naan bread, our collection features both traditional recipes and modern interpretations that celebrate the incredible diversity of Indian cooking.',
+      heroImage: '🍛',
+      popularDishes: ['Butter Chicken', 'Biryani', 'Naan Bread', 'Tikka Masala', 'Gulab Jamun']
+    }
+  };
 
-  const fetchRecipes = async () => {
+  const currentCuisine = cuisineInfo[cuisine as keyof typeof cuisineInfo] || {
+    name: cuisine ? cuisine.charAt(0).toUpperCase() + cuisine.slice(1) : 'Cuisine',
+    description: `Explore our collection of ${cuisine || ''} recipes, featuring traditional favorites and modern twists.`,
+    heroImage: '🍽️',
+    popularDishes: []
+  };
+
+  useEffect(() => {
+    if (cuisine) {
+      fetchCuisineRecipes();
+    }
+  }, [cuisine]);
+
+  const fetchCuisineRecipes = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/recipes');
+      const response = await fetch(`/api/recipes?cuisine=${cuisine}`);
       if (response.ok) {
         const data = await response.json();
         setRecipes(data);
       }
     } catch (error) {
-      console.error('Error fetching recipes:', error);
+      console.error('Error fetching cuisine recipes:', error);
     } finally {
       setLoading(false);
     }
@@ -59,11 +96,10 @@ const RecipesPage: React.FC = () => {
     const matchesSearch = recipe.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          recipe.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          recipe.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-    const matchesCuisine = !selectedCuisine || recipe.cuisine === selectedCuisine;
     const matchesDifficulty = !selectedDifficulty || recipe.difficulty === selectedDifficulty;
     const matchesDiet = !selectedDiet || recipe.tags.includes(selectedDiet);
     
-    return matchesSearch && matchesCuisine && matchesDifficulty && matchesDiet;
+    return matchesSearch && matchesDifficulty && matchesDiet;
   });
 
   const sortedRecipes = [...filteredRecipes].sort((a, b) => {
@@ -75,32 +111,32 @@ const RecipesPage: React.FC = () => {
       case 'time':
         return (a.prepTime + a.cookTime) - (b.prepTime + b.cookTime);
       default:
-        return 0; // newest first (assuming they're already sorted by date)
+        return 0;
     }
   });
 
   const clearFilters = () => {
     setSearchTerm('');
-    setSelectedCuisine('');
     setSelectedDifficulty('');
     setSelectedDiet('');
-    setSortBy('newest');
+    setSortBy('popular');
   };
 
   return (
     <>
       <Helmet>
-        <title>All Recipes - Recipe Ideas</title>
-        <meta name="description" content="Browse our complete collection of AI-generated recipes. Filter by cuisine, dietary preferences, cooking time, and more." />
+        <title>{currentCuisine.name} Recipes - Recipe Ideas</title>
+        <meta name="description" content={currentCuisine.description} />
       </Helmet>
-      
+
       <div className="min-h-screen bg-gray-50">
         {/* Hero Section */}
         <div className="bg-gradient-to-r from-orange-600 to-orange-700 text-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
-              <h1 className="text-4xl font-bold mb-4">Discover Amazing Recipes</h1>
-              <p className="text-xl mb-8">Explore thousands of delicious recipes from around the world</p>
+              <div className="text-6xl mb-4">{currentCuisine.heroImage}</div>
+              <h1 className="text-4xl font-bold mb-4">{currentCuisine.name} Recipes</h1>
+              <p className="text-xl mb-8 max-w-3xl mx-auto">{currentCuisine.description}</p>
               
               {/* Search Bar */}
               <div className="max-w-2xl mx-auto">
@@ -108,7 +144,7 @@ const RecipesPage: React.FC = () => {
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                   <input
                     type="text"
-                    placeholder="Search recipes, ingredients, or cuisines..."
+                    placeholder={`Search ${currentCuisine.name} recipes...`}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full pl-10 pr-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-300"
@@ -118,6 +154,23 @@ const RecipesPage: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Popular Dishes */}
+        {currentCuisine.popularDishes.length > 0 && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Popular {currentCuisine.name} Dishes</h2>
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                {currentCuisine.popularDishes.map((dish, index) => (
+                  <div key={index} className="text-center p-4 bg-orange-50 rounded-lg">
+                    <div className="text-2xl mb-2">🍽️</div>
+                    <h3 className="font-semibold text-gray-900 text-sm">{dish}</h3>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Filters and Content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -129,18 +182,6 @@ const RecipesPage: React.FC = () => {
                 <span className="text-sm font-medium text-gray-700">Filters:</span>
               </div>
               
-              {/* Cuisine Filter */}
-              <select
-                value={selectedCuisine}
-                onChange={(e) => setSelectedCuisine(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
-              >
-                <option value="">All Cuisines</option>
-                {cuisines.map(cuisine => (
-                  <option key={cuisine} value={cuisine}>{cuisine}</option>
-                ))}
-              </select>
-
               {/* Difficulty Filter */}
               <select
                 value={selectedDifficulty}
@@ -177,7 +218,7 @@ const RecipesPage: React.FC = () => {
               </select>
 
               {/* Clear Filters */}
-              {(selectedCuisine || selectedDifficulty || selectedDiet || searchTerm) && (
+              {(selectedDifficulty || selectedDiet || searchTerm) && (
                 <button
                   onClick={clearFilters}
                   className="px-4 py-2 text-sm text-orange-600 hover:text-orange-700 font-medium"
@@ -191,7 +232,7 @@ const RecipesPage: React.FC = () => {
           {/* Results Count */}
           <div className="mb-6">
             <p className="text-gray-600">
-              Showing {sortedRecipes.length} of {recipes.length} recipes
+              Showing {sortedRecipes.length} of {recipes.length} {currentCuisine.name} recipes
             </p>
           </div>
 
@@ -279,9 +320,9 @@ const RecipesPage: React.FC = () => {
           ) : (
             <div className="text-center py-12">
               <div className="text-gray-400 mb-4">
-                <Search className="w-16 h-16 mx-auto" />
+                <Globe className="w-16 h-16 mx-auto" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No recipes found</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">No {currentCuisine.name} recipes found</h3>
               <p className="text-gray-600">
                 Try adjusting your search terms or filters to find what you're looking for.
               </p>
@@ -293,4 +334,4 @@ const RecipesPage: React.FC = () => {
   );
 };
 
-export default RecipesPage; 
+export default CuisinePage; 
