@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 interface Recipe {
@@ -16,26 +16,6 @@ interface Recipe {
 
 const HomePage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [featuredRecipes, setFeaturedRecipes] = useState<Recipe[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchFeaturedRecipes();
-  }, []);
-
-  const fetchFeaturedRecipes = async () => {
-    try {
-      const response = await fetch('/api/recipes');
-      if (response.ok) {
-        const recipes = await response.json();
-        setFeaturedRecipes(recipes.slice(0, 4));
-      }
-    } catch (error) {
-      console.error('Error fetching featured recipes:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
