@@ -1,30 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <header className="bg-black sticky top-0 z-50 shadow-lg">
+    <header className="bg-black/90 backdrop-blur-sm sticky top-0 z-50 shadow-lg">
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
-        {/* Wavy white text logo */}
+        {/* Logo */}
         <Link to="/" className="select-none">
           <div className="flex items-center">
-            <span className="text-3xl font-bold text-white wavy-text tracking-wide" style={{ fontFamily: 'Poppins, Montserrat, sans-serif' }}>
-              Recipe-Ideas
+            <span className="text-2xl font-bold text-white tracking-wide">
+              Recipe Ideas
             </span>
           </div>
         </Link>
         
-        {/* Navigation */}
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-8">
-          <Link to="/recipes" className="text-white text-lg font-medium hover:text-orange-400 transition-colors duration-200">Recipes</Link>
-          <Link to="/about" className="text-white text-lg font-medium hover:text-orange-400 transition-colors duration-200">About</Link>
-          <Link to="/contact" className="text-white text-lg font-medium hover:text-orange-400 transition-colors duration-200">Contact</Link>
-          <Link to="/admin" className="text-white text-lg font-medium hover:text-orange-400 transition-colors duration-200">Admin</Link>
+          <Link to="/" className="text-white text-lg font-medium hover:text-orange-400 transition-colors duration-200">
+            Home
+          </Link>
+          <Link to="/recipes" className="text-white text-lg font-medium hover:text-orange-400 transition-colors duration-200">
+            Recipes
+          </Link>
+          <Link to="/about" className="text-white text-lg font-medium hover:text-orange-400 transition-colors duration-200">
+            About
+          </Link>
+          <Link to="/contact" className="text-white text-lg font-medium hover:text-orange-400 transition-colors duration-200">
+            Contact
+          </Link>
         </nav>
 
         {/* Mobile menu button */}
         <div className="md:hidden">
-          <button className="text-white hover:text-orange-400 transition-colors">
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="text-white hover:text-orange-400 transition-colors"
+          >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
@@ -32,36 +45,41 @@ const Header: React.FC = () => {
         </div>
       </div>
       
-      {/* Enhanced wavy text effect */}
-      <style>{`
-        .wavy-text {
-          display: inline-block;
-          animation: wave 3s ease-in-out infinite;
-          background: linear-gradient(45deg, #ffffff, #fbbf24, #ffffff);
-          background-size: 200% 200%;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-        @keyframes wave {
-          0%, 100% { 
-            transform: skewX(-3deg) scale(1);
-            background-position: 0% 50%;
-          }
-          25% { 
-            transform: skewX(3deg) scale(1.02);
-            background-position: 100% 50%;
-          }
-          50% { 
-            transform: skewX(-2deg) scale(1);
-            background-position: 100% 50%;
-          }
-          75% { 
-            transform: skewX(2deg) scale(1.02);
-            background-position: 0% 50%;
-          }
-        }
-      `}</style>
+      {/* Mobile Navigation */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-black/95 backdrop-blur-sm">
+          <nav className="px-6 py-4 space-y-2">
+            <Link 
+              to="/" 
+              className="block text-white text-lg font-medium hover:text-orange-400 transition-colors duration-200 py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Home
+            </Link>
+            <Link 
+              to="/recipes" 
+              className="block text-white text-lg font-medium hover:text-orange-400 transition-colors duration-200 py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Recipes
+            </Link>
+            <Link 
+              to="/about" 
+              className="block text-white text-lg font-medium hover:text-orange-400 transition-colors duration-200 py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              About
+            </Link>
+            <Link 
+              to="/contact" 
+              className="block text-white text-lg font-medium hover:text-orange-400 transition-colors duration-200 py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Contact
+            </Link>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };
